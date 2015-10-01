@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<title>Console Test</title>
+</head>
+<body style="background: #000; font-family: consolas;">
+	<div id="output" style="width: 640px; height: 480px; background: #000; color: #fff; padding: 10px 5px; 10px 10px;"></div>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="Console.js"></script>
+	<script type="text/javascript">
+		window["mashapeApiKey"] = "";
+
+		$(function () {
+			var isComputing = false;
+			var $cursor = $('<span id="cursor" style="background-image: url(\'cursor.gif\'); background-position: right center; background-repeat: no-repeat; padding-right: 12px; background-size: auto 100%;"></span>');
+			var $output = $('#output');
+			var onStdOut = function (output) {
+				appendToOutput(output);
+				isComputing = false;
+			};
+
+			function appendToOutput(text) {
+				$output.html($output.html() + text + "<br>");
+				resetCursor();
+			}
+
+			function resetCursor() {
+				$output.children('#cursor').remove();
+				$output.append($cursor);
+			}
+
+			var con = new Klochwork.Console.SimpleConsole(onStdOut);
+			con.init();
+			resetCursor();
+
+			$(document).keypress(function (e) {
+				e.preventDefault();
+
+				var char = "";
+					switch (e.keyCode) {
+						case 13: //ENTER
+							if (!isComputing) {
+								isComputing = true;
+
+								var command = $cursor.text();
+								appendToOutput(command);
+
+								command = command.substr(2);
+								$cursor.text("> ");
+
+								con.onStdIn(command);
+							}
+							return;
+
+						case 32: //SPACE
+							char = " ";
+							break;
+
+						default:
+							char = String.fromCharCode(e.keyCode);
+							console.log(e.keyCode);
+					}
+
+					$cursor.text($cursor.text() + char);
+					resetCursor();
+			});
+		});
+	</script>
+</body>
+</html>

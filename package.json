@@ -1,0 +1,21 @@
+{
+  "name": "console",
+  "version": "1.0.0",
+  "description": "An extensible command execution library.",
+  "main": "Console.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github:cloughney/webconsole.git"
+  },
+  "author": "Chris Loughney",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp-typescript": "^2.9.0",
+    "gulp-uglify": "^1.4.1",
+    "tsd": "^0.6.4"
+  }
+}
